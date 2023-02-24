@@ -1,7 +1,8 @@
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 import numpy as np
-import 'main.py'
+from algo import Point
+
 # Creating dataset
 z = np.random.randint(100, size =(50))
 x = np.random.randint(80, size =(50))
