@@ -1,6 +1,9 @@
 import math
 import random
 
+from mpl_toolkits import mplot3d
+import matplotlib.pyplot as plt
+
 euclid_count = 0
 
 class Point:
@@ -82,6 +85,27 @@ def printPointPair(pair):
     print("Point 1: ({0}, {1}, {2})".format(p1.x, p1.y, p1.z))
     print("Point 2: ({0}, {1}, {2})".format(p2.x, p2.y, p2.z))
 
+def visualizePoints(points, closest_pair=None):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+ 
+    x = [point.x for point in points]
+    y = [point.y for point in points]
+    z = [point.z for point in points]
+ 
+    if closest_pair:
+        p1, p2 = closest_pair
+ 
+        ax.scatter(p1.x, p1.y, p1.z, color='r', s=100)
+        ax.scatter(p2.x, p2.y, p2.z, color='r', s=100)
+ 
+    ax.scatter(x, y, z)
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+ 
+    plt.show()
+
 if __name__ == "__main__":
     import time
 
@@ -107,3 +131,5 @@ if __name__ == "__main__":
     print("The number of Euclidian formula operation is", euclid_count)
     print("The time taken is", end_time - start_time, "seconds")
     print()
+
+    visualizePoints(P, closest_pair)
