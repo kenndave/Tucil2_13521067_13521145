@@ -12,12 +12,42 @@ class Point:
         self.y = y
         self.z = z
 
+def quickSort(list, key):
+    if len(list) <= 1:
+        return list
+    else:
+        pivot = list.pop()
+
+    greaterPivot = []
+    lesserPivot = []
+    if (key == 0):
+        for titik in list:
+            if titik.x > pivot.x:
+                greaterPivot.append(titik)
+            else:
+                lesserPivot.append(titik)
+    elif (key == 1):
+        for titik in list:
+            if titik.y > pivot.y:
+                greaterPivot.append(titik)
+            else:
+                lesserPivot.append(titik)
+    elif (key == 2):
+        for titik in list:
+            if titik.z > pivot.z:
+                greaterPivot.append(titik)
+            else:
+                lesserPivot.append(titik)
+    
+    return quickSort(lesserPivot, key) + [pivot] + quickSort(greaterPivot, key)
+
 def dist(p1, p2):
     global euclid_count
     euclid_count += 1
     return math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2 + (p1.z - p2.z)**2)
 
 def bruteForce(P, n):
+    i = 0
     min_dist = float("inf")
     for i in range(n):
         for j in range(i+1, n):
@@ -31,8 +61,8 @@ def min(x, y):
 
 def stripClosest(strip, size, d, closest_pair):
     min_dist = d
-    strip = sorted(strip, key=lambda point: point.z)
-
+    strip = quickSort(strip, 2)
+    #printPoints(strip)
     for i in range(size):
         for j in range(i+1, size):
             if (strip[j].z - strip[i].z) >= min_dist:
@@ -62,15 +92,15 @@ def closestUtil(P, n):
     return closest_pair
 
 def closest(P, n):
-    P = sorted(P, key=lambda point: point.x)
+    P = quickSort(P, 0)
     return closestUtil(P, n)
 
 def createRandomPoints(n):
     points = []
     for i in range(n):
-        x = random.randint(1, 100)
-        y = random.randint(1, 100)
-        z = random.randint(1, 100)
+        x = round(random.uniform(1, 100), 2)
+        y = round(random.uniform(1, 100), 2)
+        z = round(random.uniform(1, 100), 2)
         p = Point(x, y, z)
         points.append(p)
     return points
@@ -98,7 +128,7 @@ def visualizePoints(points, closest_pair=None):
  
         ax.scatter(p1.x, p1.y, p1.z, color='r', s=100)
         ax.scatter(p2.x, p2.y, p2.z, color='r', s=100)
- 
+    ax.plot([p1.x, p2.x], [p1.y, p2.y], [p1.z, p2.z], color = 'r', linewidth = 5)
     ax.scatter(x, y, z)
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
@@ -115,21 +145,34 @@ if __name__ == "__main__":
 
     number_of_points = int(input("Input the number of points: "))
     P = createRandomPoints(number_of_points)
-    # printPoints(P)
+    P2 = P.copy()
+    printPoints(P)
     print()
 
+    
+    # Divide & Conquer
     start_time = time.time()
     closest_pair = closest(P, number_of_points)
     end_time = time.time()
+    printPoints(P2)
+    # BruteForce
+    start_bf = time.time()
+    closest_pair2 = bruteForce(P2, number_of_points)
+    end_bf = time.time()
+
     
     print()
-    print("The closest pair of points are,")
+    print("The closest pair of points are, (Divide & Conquer)")
     printPointPair(closest_pair)
+    print("The closest pair of points are, (bruteForce)")
+    printPointPair(closest_pair2)
     print()
 
-    print("The distance is", dist(*closest_pair))
+    print("The distance is for Divide & Conquer", dist(*closest_pair)) #round(dist(*closest_pair), 2))
+    print("The distance for Brute Force is", dist(*closest_pair2))
     print("The number of Euclidian formula operation is", euclid_count)
-    print("The time taken is", end_time - start_time, "seconds")
+    print("Time taken by Divide & Conquer ", end_time - start_time, "seconds")
+    print("Time taken by bruteForce ", end_bf - start_bf, " seconds")
     print()
 
     visualizePoints(P, closest_pair)
