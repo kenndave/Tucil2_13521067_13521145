@@ -25,7 +25,7 @@ Python versi 3.9.64 atau lebih baru serta extension matplotlib.
 1. Pastikan sudah ada Python pada mesin eksekusi sesuai requirement yang ada.
 2. Ekstensi matplotlib dapat diunduh dengan cara `pip install matplotlib`
 ## Cara Menjalankan Program
-
+1. Pada directory file main, jalankan `python -u <directory folder main>/main.py`
 ## Dibuat oleh
 * Nama: Kenneth Dave Bahana
 * NIM: 13521145
