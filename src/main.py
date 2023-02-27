@@ -1,5 +1,6 @@
 import math
 import random
+import time
 
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
@@ -43,13 +44,13 @@ def quickSort(list, key):
 def dist(p1, p2):
     global euclid_count
     euclid_count += 1
-    disst = 0
+    distance = 0
     for i in range(len(p1)):
-        disst += (p1[i] - p2[i])**2
-    return math.sqrt(disst)
+        distance += (p1[i] - p2[i])**2
+    return math.sqrt(distance)
 
 def bruteForce(P, n):
-    min_dist = float("inf")
+    min_dist = 999999
     for i in range(n):
         for j in range(i+1, n):
             if dist(P[i], P[j]) < min_dist:
@@ -65,38 +66,30 @@ def min(x, y):
 
 def stripClosest(strip, size, d, closest_pair):
     min_dist = d
-    if len(strip[0]) < 2:
-        #print(len(strip))
-        sumbu = 0
-        strip = quickSort(strip, sumbu)
-    else:
-        sumbu = 1
-        strip = quickSort(strip, sumbu)
     #printPoints(strip)
     for i in range(size):
         for j in range(i+1, size):
-            if (strip[j][sumbu] - strip[i][sumbu]) >= min_dist:
+            if (strip[j][0] - strip[i][0]) >= min_dist:
                 break
             if dist(strip[i], strip[j]) < min_dist:
                 min_dist = dist(strip[i], strip[j])
                 closest_pair = (strip[i], strip[j])
     return closest_pair
 
-def closestUtil(P, n):
+def closestDots(P, n):
     if n <= 3:
         return bruteForce(P, n)
     mid = n//2
     midPoint = P[mid]
-    dl_pair = closestUtil(P[:mid], mid)
-    dr_pair = closestUtil(P[mid:], n - mid)
-    dl = dist(*dl_pair)
-    dr = dist(*dr_pair)
-    d = min(dl, dr)
-    if dl < dr:
-        closest_pair = dl_pair
+    left_pair = closestDots(P[:mid], mid)
+    right_pair = closestDots(P[mid:], n - mid)
+    left_closest = dist(*left_pair)
+    right_closest = dist(*right_pair)
+    d = min(left_closest, right_closest)
+    if left_closest < right_closest:
+        closest_pair = left_pair
     else:
-        closest_pair = dr_pair
-    #closest_pair = dl_pair if dl < dr else dr_pair
+        closest_pair = right_pair
     strip = []
     for i in range(n):
         if abs(P[i][0] - midPoint[0]) < d:
@@ -113,7 +106,7 @@ def closestUtil(P, n):
 
 def closest(P, n):
     P = quickSort(P, 0)
-    return closestUtil(P, n)
+    return closestDots(P, n)
 
 def createRandomPoints(n, dimension):
     points = []
@@ -197,64 +190,66 @@ def visualizePoints(points, closest_pair=None):
  
     plt.show()
 
-if __name__ == "__main__":
-    import time
+# if __name__ == "__main__":
+# Main
+print()
+print("Mencari Pasangan Titik Terdekat 3D dengan Algoritma Divide and Conquer")
+print()
 
-    print()
-    print("Closest Pair of Points in 3D Using DIVIDE AND CONQUER Algorithm")
-    print()
-
-    number_of_points = int(input("Input the number of points: "))
+n_titik = int(input("Jumlah titik: "))
+while n_titik <= 1:
+    print("Jumlah titik untuk diuji tidak valid. Silahkan input ulang dengan jumlah titik lebih dari 1!")
+    n_titik = int(input("Jumlah titik: "))
+dimens = int(input("Dimensi: "))
+while dimens <= 0:
+    print("Dimensi tersebut tidak valid. Silahkan input ulang dimensi dengan nilai 1 atau ke atas.")
     dimens = int(input("Dimensi: "))
-    while dimens <= 0:
-        print("Dimensi tersebut tidak valid. Silahkan input ulang dimensi dengan nilai 1 atau ke atas.")
-        dimens = int(input("Dimensi: "))
-    P = []
-    P = createRandomPoints(number_of_points, dimens)
-    P2 = P.copy()
-    # printPoints(P)
-    print()
+P = []
+P = createRandomPoints(n_titik, dimens)
+P2 = P.copy()
+# printPoints(P)
+print()
 
 
-    # BruteForce
-    start_bf = time.time()
-    closest_pair2 = bruteForce(P2, number_of_points)
-    end_bf = time.time()
-    # Divide & Conquer
-    euclid_count_bf = euclid_count
+# BruteForce
+start_bf = time.time()
+closest_pair2 = bruteForce(P2, n_titik)
+end_bf = time.time()
+# Divide & Conquer
+euclid_count_bf = euclid_count
 
-    start_time = time.time()
-    closest_pair = closest(P, number_of_points)
-    end_time = time.time()
-    # printPoints(P2)
+start_time = time.time()
+closest_pair = closest(P, n_titik)
+end_time = time.time()
+# printPoints(P2)
 
-    
-    print()
-    print("The closest pair of points are, (Divide & Conquer)")
-    printPointPair(closest_pair)
-    print()
-    print("The closest pair of points are, (bruteForce)")
-    printPointPair(closest_pair2)
-    print()
 
-    print("The distance is for Divide & Conquer", dist(*closest_pair)) #round(dist(*closest_pair), 2))
-    print()
-    print("The distance for Brute Force is", dist(*closest_pair2))
-    print()
-    print("The number of Euclidian formula operation (Divide & Conquer) is", euclid_count-euclid_count_bf)
-    print("The number of Euclidian formula operation (Brute Force) is", euclid_count_bf)
-    print("Time taken by Divide & Conquer ", 1000*(end_time - start_time), "miliseconds")
-    print("Time taken by Brute Force ", 1000*(end_bf - start_bf), " miliseconds")
-    print()
-    if dimens <= 3 & dimens > 0:
-            visualize = input("Apakah ingin ditampilkan visualisasinya? (Y / N)")
-            while visualize not in {'Y', 'N', 'y', 'n'}:
-                print("Input tidak valid. Silahkan input ulang!")
-                visualize = input("Apakah ingin ditampilkan visualisasinya?(Y/N) ")
-            if (visualize in {'Y', 'y'}):
-                visualizePoints(P, closest_pair)
-    else:
-        print("Maaf, tidak dapat divisualisasikan pada dimensi,", dimens)
+print()
+print("Pasangan titik terdekat dengan algoritma Divide & Conquer:")
+printPointPair(closest_pair)
+print()
+print("Pasangan titik terdekat dengan algoritma BruteForce:")
+printPointPair(closest_pair2)
+print()
+
+print("Jarak pasangan titik terdekat Divide & Conquer: ", dist(*closest_pair)) #round(dist(*closest_pair), 2))
+print()
+print("Jarak pasangan titik terdekat Brute Force: ", dist(*closest_pair2))
+print()
+print("Jumlah operasi euclidean algoritma Divide & Conquer: ", euclid_count-euclid_count_bf)
+print("Jumlah operasi euclidean algoritma Brute Force: ", euclid_count_bf)
+print("Waktu Eksekusi Divide & Conquer ", 1000*(end_time - start_time), "miliseconds")
+print("Waktu Eksekusi Brute Force ", 1000*(end_bf - start_bf), " miliseconds")
+print()
+if dimens <= 3 & dimens > 0:
+        visualize = input("Apakah ingin ditampilkan visualisasinya? (Y / N)")
+        while visualize not in {'Y', 'N', 'y', 'n'}:
+            print("Input tidak valid. Silahkan input ulang!")
+            visualize = input("Apakah ingin ditampilkan visualisasinya?(Y/N) ")
+        if (visualize in {'Y', 'y'}):
+            visualizePoints(P, closest_pair)
+else:
+    print("Maaf, tidak dapat divisualisasikan pada dimensi,", dimens)
     # if dimens <= 3 & dimens > 0:
     #     visualize = (input("Apakah ingin ditampilkan visualisasinya?(Y/N) "))
     #     while not (visualize == 'Y' or visualize == 'y' or visualize == 'N' or visualize == 'n'):
