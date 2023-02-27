@@ -13,16 +13,26 @@ Deskripsi
 ## Deskripsi Singkat Program
 
 ## Sistematika File
-
+```bash
+├─── doc
+|   ├─── Tucil1_K1_13521145_Kenneth Dave Bahana.pdf
+├─── src
+│   ├─── main.cpp
+```
 ## Requirements
-
+Python versi 3.9.64 atau lebih baru serta extension matplotlib.
 ## Cara Kompilasi Program
+1. Pastikan sudah ada Python pada mesin eksekusi sesuai requirement yang ada.
+2. Ekstensi matplotlib dapat diunduh dengan cara `pip install matplotlib`
 ## Cara Menjalankan Program
-
+1. Pada directory file main, jalankan `python -u <directory folder main>/main.py`
 ## Dibuat oleh
 * Nama: Kenneth Dave Bahana
 * NIM: 13521145
 * Prodi/Jurusan: STEI/Teknik Informatika
 * Profile Github: kenndave
 
-* Nama: Yobel Dean
+* Nama: Yobel Dean Christoper
+* NIM: 13521067
+* Prodi/Jurusan: STEI/Teknik Informatika
+* Profile Github: yobeldc
