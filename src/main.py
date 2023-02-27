@@ -104,7 +104,7 @@ def closestDots(P, n):
     else:
         return closest_pair
 
-def closest(P, n):
+def DivAndConq(P, n):
     P = quickSort(P, 0)
     return closestDots(P, n)
 
@@ -219,7 +219,7 @@ end_bf = time.time()
 euclid_count_bf = euclid_count
 
 start_time = time.time()
-closest_pair = closest(P, n_titik)
+closest_pair = DivAndConq(P, n_titik)
 end_time = time.time()
 # printPoints(P2)
 
