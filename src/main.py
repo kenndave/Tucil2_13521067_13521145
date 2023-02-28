@@ -119,7 +119,7 @@ def createRandomPoints(n, dimension):
     return points
 
 def printPoints(points):
-    print("The randomize points are,")
+    print("Berikut hasil generasi titik - titik acak,")
     for point in points:
         print("(", end='')
         for i in range(len(points[0])):
