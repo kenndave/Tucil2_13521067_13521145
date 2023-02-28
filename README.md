@@ -30,7 +30,7 @@ Python versi 3.9.64 atau lebih baru serta extension matplotlib.
 * NIM: 13521145
 * Prodi/Jurusan: STEI/Teknik Informatika
 * Profile Github: kenndave
-
+*
 * Nama: Yobel Dean Christoper
 * NIM: 13521067
 * Prodi/Jurusan: STEI/Teknik Informatika
