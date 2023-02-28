@@ -1,8 +1,6 @@
 # Tucil2_13521067_13521145 <Judul>
 Deskripsi
 
-# pip install matplotlib
-
 ## Daftar Isi
 * [Deskripsi Singkat Program](#deskripsi-singkat-program)
 * [Sistematika File](#sistematika-file)
@@ -15,7 +13,7 @@ Deskripsi
 ## Sistematika File
 ```bash
 ├─── doc
-|   ├─── Tucil1_K1_13521145_Kenneth Dave Bahana.pdf
+|   ├─── Laporan_Tucil2_13521067_13521145.pdf
 ├─── src
 │   ├─── main.cpp
 ```
