@@ -1,4 +1,4 @@
-# Tucil2_13521067_13521145 <Judul>
+# Divide and Conquer Nearest 3D Dot Pair
 Disusun untuk memenuhi Tugas Kecil 2 IF2211 Strategi Algoritma "Mencari Pasangan Titik Terdekat 3D dengan Algoritma Divide and Conquer".
 
 ## Daftar Isi
@@ -13,7 +13,7 @@ Program ini dibuat untuk melakukan pencarian jarak terdekat sebuah pasangan titi
 ## Sistematika File
 ```bash
 ├─── doc
-|   ├─── Laporan_Tucil2_13521067_13521145.pdf
+|   ├─── Tucil2_13521067_13521145.pdf
 ├─── src
 │   ├─── main.cpp
 ```
